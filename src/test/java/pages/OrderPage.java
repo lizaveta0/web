@@ -10,6 +10,7 @@ import java.time.Duration;
 
 public class OrderPage {
     private WebDriver driver;
+    private WebDriverWait wait;
 
     private By inputName = By.name("name");
     private By inputPhone = By.name("phone");
@@ -23,6 +24,7 @@ public class OrderPage {
 
     public OrderPage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     //Заполнение формы
@@ -36,7 +38,6 @@ public class OrderPage {
        }
 
        driver.findElement(continueButton).click();
-    //    WebElement metroStationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(metroStationField));
     }
 
     public String getOrderSuccessHeader() {
@@ -44,10 +45,12 @@ public class OrderPage {
     }
 
     public String getErrorFofName() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(errorForName));
         return getText(errorForName);
     }
 
     public String getErrorForPhone() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(errorForPhone));
         return getText(errorForPhone);
     }
 
