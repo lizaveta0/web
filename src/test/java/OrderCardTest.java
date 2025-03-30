@@ -17,10 +17,8 @@ public class OrderCardTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        driver = new ChromeDriver();
         orderPage = new OrderPage(driver);
         driver.get("http://localhost:9999/");
-
     }
 
     @Test
