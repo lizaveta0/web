@@ -7,8 +7,8 @@ import pages.OrderPage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderCardTest {
-    public static WebDriver driver;
-    private static OrderPage orderPage;
+    public WebDriver driver;
+    private OrderPage orderPage;
 
     @BeforeEach
     public void setUp() {
@@ -17,8 +17,8 @@ public class OrderCardTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-        orderPage = new OrderPage(driver);
         driver.get("http://localhost:9999/");
+        orderPage = new OrderPage(driver);
     }
 
     @Test
@@ -46,6 +46,18 @@ public class OrderCardTest {
     }
 
     @Test
+    public void testOrderFlowNegativeNameEmpty() {
+        String name = "";
+        String phone = "+79998887766";
+        Boolean accept = true;
+
+        orderPage.fillOrderForm(name, phone, accept);
+        String errorForName = orderPage.getErrorFofName();
+
+        assertEquals("Поле обязательно для заполнения", errorForName);
+    }
+
+    @Test
     public void testOrderFlowNegativePhone() {
         String name = "Тестовый Пользователь";
         String phone = "+7999888776";
@@ -55,6 +67,18 @@ public class OrderCardTest {
         String errorForPhone = orderPage.getErrorForPhone();
 
         assertEquals("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.", errorForPhone);
+    }
+
+    @Test
+    public void testOrderFlowNegativePhoneEmpty() {
+        String name = "Тестовый Пользователь";
+        String phone = "";
+        Boolean accept = true;
+
+        orderPage.fillOrderForm(name, phone, accept);
+        String errorForPhone = orderPage.getErrorForPhone();
+
+        assertEquals("Поле обязательно для заполнения", errorForPhone);
     }
 
     @Test

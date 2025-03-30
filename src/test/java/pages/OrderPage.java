@@ -16,8 +16,8 @@ public class OrderPage {
     private By agreemetCheck = By.xpath("//*[@data-test-id='agreement']");
     private By continueButton = By.xpath("//*[@type='button']");
     private By successHeader = By.xpath("//*[@data-test-id='order-success']");
-    private By errorForName = By.xpath("//*[@data-test-id='name']//span[@class='input__sub']");
-    private By errorForPhone = By.xpath("//*[@data-test-id='phone']//span[@class='input__sub']");
+    private By errorForName = By.xpath("//*[@data-test-id='name' and contains(@class, 'input_invalid')]//span[@class='input__sub']");
+    private By errorForPhone = By.xpath("//*[@data-test-id='phone' and contains(@class, 'input_invalid')]//span[@class='input__sub']");
 
 
 
