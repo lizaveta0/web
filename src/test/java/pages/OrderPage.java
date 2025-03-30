@@ -1,0 +1,63 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class OrderPage {
+    private WebDriver driver;
+
+    private By inputName = By.name("name");
+    private By inputPhone = By.name("phone");
+    private By agreemetCheck = By.xpath("//*[@data-test-id='agreement']");
+    private By continueButton = By.xpath("//*[@type='button']");
+    private By successHeader = By.xpath("//*[@data-test-id='order-success']");
+    private By errorForName = By.xpath("//*[@data-test-id='name']//span[@class='input__sub']");
+    private By errorForPhone = By.xpath("//*[@data-test-id='phone']//span[@class='input__sub']");
+
+
+
+    public OrderPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    //Заполнение формы
+    public void fillOrderForm(String name, String phone, Boolean accept) {
+        // Заполнение полей
+       driver.findElement(inputName).sendKeys(name);
+       driver.findElement(inputPhone).sendKeys(phone);
+
+       if (accept) {
+           driver.findElement(agreemetCheck).click();
+       }
+
+       driver.findElement(continueButton).click();
+    //    WebElement metroStationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(metroStationField));
+    }
+
+    public String getOrderSuccessHeader() {
+        return getText(successHeader);
+    }
+
+    public String getErrorFofName() {
+        return getText(errorForName);
+    }
+
+    public String getErrorForPhone() {
+        return getText(errorForPhone);
+    }
+
+    public boolean agreementIsValid() {
+        return !driver.findElement(agreemetCheck).getAttribute("class").contains("input_invalid");
+    }
+
+
+    // Базовые методы
+    public String getText(By element) {
+        return driver.findElement(element).getText();
+    }
+}
